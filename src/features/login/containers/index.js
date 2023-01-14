@@ -10,12 +10,11 @@ const Login = () => {
     <View style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
       <Text style={{fontSize: 50, fontWeight: 'bold'}}>Welcome</Text>
       <Text style={{fontSize: 40}}>To</Text>
-      <Text style={{fontSize: 40}}>React Native</Text>
-      <Text style={{fontSize: 40}}>Boilerplate</Text>
+      <Text style={{fontSize: 40}}>MSC Project</Text>
       <View style={{marginTop: 70}}>
         <Button
           mode="contained"
-          color="#008f8a"
+          color="#1565c0"
           onPress={() => {
             navigateToHome();
           }}

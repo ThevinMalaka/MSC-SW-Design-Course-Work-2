@@ -1,11 +1,18 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect, useCallback, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {Button} from 'react-native-paper';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  StatusBar,
+} from 'react-native';
+import {List, FAB} from 'react-native-paper';
 
 import {testRequest, chnageActionStatus} from '../actions';
 import {getTestFunctionStatus, getTestApiEndpointData} from '../selectors';
 import {navigateToLogin} from '../../../navigation/NavigationHelpers';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Home = () => {
   const status = useSelector(state => getTestFunctionStatus(state));
@@ -27,82 +34,113 @@ const Home = () => {
     [dispatch],
   );
 
-  return (
-    <View style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
-      <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-        React Native Boilerplate
-      </Text>
+  let sampleObj = [
+    {
+      title: 'Expenses 1',
+      description: 'Expenses description 1',
+      date: '2023-Jan-01',
+      amount: 100,
+      category: 'Food',
+      account: 'Cash',
+      income: false,
+    },
+    {
+      title: 'Expenses 2',
+      description: 'Expenses description 2',
+      date: '2023-Jan-03',
+      amount: 100,
+      category: 'Food',
+      account: 'Cash',
+      income: false,
+    },
+    {
+      title: 'Expenses 3',
+      description: 'Expenses description 3',
+      date: '2023-Jan-05',
+      amount: 100,
+      category: 'Food',
+      account: 'Cash',
+      income: false,
+    },
+    {
+      title: 'Income',
+      description: 'Salary',
+      date: '2023-Jan-06',
+      amount: 10000,
+      category: 'Salary',
+      account: 'Account',
+      income: true,
+    },
+  ];
+
+  const ListComponent = data => (
+    <View>
       <View
-        style={{marginTop: 40, alignContent: 'center', alignItems: 'center'}}>
-        <Text>Test Action Status: {status ? 'ON' : 'OFF'}</Text>
-        {status ? (
-          <View
-            style={{
-              height: 50,
-              width: 50,
-              backgroundColor: '#53ab30',
-              borderRadius: 50,
-              marginTop: 30,
-            }}
-          />
-        ) : (
-          <View
-            style={{
-              height: 50,
-              width: 50,
-              backgroundColor: '#bf0000',
-              borderRadius: 50,
-              marginTop: 30,
-            }}
-          />
-        )}
-        <Button
-          mode="contained"
-          color="#008f8a"
-          onPress={() => {
-            testAction(!status);
-          }}
-          style={{borderRadius: 20, marginTop: 30}}>
-          Press to test Action
-        </Button>
-
-        <Button
-          mode="contained"
-          color="#008f8a"
-          onPress={() => {
-            testApi();
-          }}
-          style={{borderRadius: 20, marginTop: 30}}>
-          Press to test Api Endpoint
-        </Button>
-
-        <TouchableOpacity
-          onPress={() => {
-            navigateToLogin();
-          }}>
-          <Text style={{fontSize: 15, marginTop: 20, fontWeight: 'bold'}}>
-            Go To Login Screen
+        style={{
+          flexDirection: 'row',
+          backgroundColor: '#e3e3e3',
+          borderRadius: 10,
+          padding: 10,
+          margin: 5,
+          marginLeft: 15,
+          marginRight: 15,
+        }}>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text style={{fontSize: 12}}>{data.data.category}</Text>
+        </View>
+        <View style={{flex: 3}}>
+          <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+            {data.data.title}
           </Text>
-        </TouchableOpacity>
-
-        <View
-          style={{
-            padding: 20,
-            marginTop: 30,
-            backgroundColor: '#efefef',
-            borderRadius: 20,
-          }}>
-          {data &&
-            data.map((a, i) => (
-              <View key={i}>
-                <Text>{a.Category}</Text>
-                <Text>{a.Description}</Text>
-                <Text>{a.Link}</Text>
-              </View>
-            ))}
+          <Text style={{fontSize: 12}}>{data.data.account}</Text>
+          <Text style={{fontSize: 12}}>{data.data.date}</Text>
+        </View>
+        <View style={{flex: 2, justifyContent: 'center'}}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              color: data.data.income ? '#617859' : '#f56c6c',
+            }}>
+            LKR {data.data.amount}
+          </Text>
         </View>
       </View>
+      {/* <View
+        style={{
+          width: Dimensions.get('screen').width - 40,
+          backgroundColor: '#8c8c8c',
+          height: 1,
+        }}
+      /> */}
     </View>
+  );
+
+  return (
+    <Fragment>
+      <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
+      <ScrollView>
+        <View style={{marginTop: 10}}>
+          {sampleObj.map((item, index) => (
+            <ListComponent key={index} data={item} />
+          ))}
+        </View>
+      </ScrollView>
+
+      <FAB
+        style={{
+          position: 'absolute',
+          margin: 16,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#1565c0',
+          color: '#fff',
+        }}
+        large
+        icon="plus"
+        onPress={() => {}}
+      />
+    </Fragment>
   );
 };
 
