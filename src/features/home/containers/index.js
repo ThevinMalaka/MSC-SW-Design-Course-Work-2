@@ -11,7 +11,7 @@ import {List, FAB} from 'react-native-paper';
 
 import {testRequest, chnageActionStatus} from '../actions';
 import {getTestFunctionStatus, getTestApiEndpointData} from '../selectors';
-import {navigateToLogin} from '../../../navigation/NavigationHelpers';
+import {navigateToAddExpenses} from '../../../navigation/NavigationHelpers';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Home = () => {
@@ -139,7 +139,9 @@ const Home = () => {
         }}
         large
         icon="plus"
-        onPress={() => {}}
+        onPress={() => {
+          navigateToAddExpenses();
+        }}
       />
     </Fragment>
   );

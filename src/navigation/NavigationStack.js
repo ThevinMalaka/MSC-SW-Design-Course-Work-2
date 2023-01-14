@@ -8,6 +8,7 @@ import Constants from '../lib/Constants';
 import Login from '../features/login/containers';
 // import Home from '../features/home/containers';
 import Home from './nestingNavigator/UserDrawerNavigator';
+import AddExpenses from '../features/home/containers/addExpenses';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -29,15 +30,15 @@ export default function App() {
         component={Home}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="Home"
-        component={Home}
+      <Stack.Screen
+        name="AddExpenses"
+        component={AddExpenses}
         options={{
           headerShown: true,
-          title: 'Home Screen',
-          headerTintColor: Constants.BASICS.WHITE,
+          title: 'Add Transaction',
+          headerTintColor: '#fff',
           headerStyle: {
-            backgroundColor: Constants.BASICS.PRIMARY_COLOR,
+            backgroundColor: '#1565c0',
             elevation: 2, // remove shadow on Android
             shadowOpacity: 2, // remove shadow on iOS
           },
@@ -45,7 +46,7 @@ export default function App() {
             fontSize: size(16),
           },
         }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 }
