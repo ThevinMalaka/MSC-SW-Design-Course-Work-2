@@ -95,7 +95,8 @@ const Home = () => {
           <Text style={{fontSize: 12}}>{data.data.account}</Text>
           <Text style={{fontSize: 12}}>{data.data.date}</Text>
         </View>
-        <View style={{flex: 2, justifyContent: 'center'}}>
+        <View
+          style={{flex: 2, justifyContent: 'center', alignItems: 'flex-end'}}>
           <Text
             style={{
               fontSize: 16,

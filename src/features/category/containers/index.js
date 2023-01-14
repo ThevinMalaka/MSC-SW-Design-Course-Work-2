@@ -29,16 +29,18 @@ const Category = () => {
 
   const CategoryItem = ({title}) => {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#e3e3e3',
-          padding: 10,
-          margin: 3,
-        }}>
-        <Text>{title}</Text>
+      <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
+        <View
+          style={{
+            flex: 1,
+            alignContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#e3e3e3',
+            padding: 10,
+            margin: 3,
+          }}>
+          <Text>{title}</Text>
+        </View>
       </View>
     );
   };
@@ -48,19 +50,15 @@ const Category = () => {
       <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
       <View
         style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
-        <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
-          <CategoryItem title="Food" />
-          <CategoryItem title="Social Life" />
-          <CategoryItem title="Fuel" />
-          <CategoryItem title="Business" />
-        </View>
-
-        <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
-          <CategoryItem title="Beauty" />
-          <CategoryItem title="House" />
-          <CategoryItem title="Gift" />
-          <CategoryItem title="Insurance" />
-        </View>
+        <CategoryItem title="Food" />
+        <CategoryItem title="Social Life" />
+        <CategoryItem title="Fuel" />
+        <CategoryItem title="Business" />
+        <CategoryItem title="Beauty" />
+        <CategoryItem title="House" />
+        <CategoryItem title="Gift" />
+        <CategoryItem title="Insurance" />
+        <CategoryItem title="Others" />
 
         <View style={{flexDirection: 'row', marginTop: 30}}>
           <Button mode="contained" color="#1565c0" onPress={() => testApi()}>
