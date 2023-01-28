@@ -2,27 +2,14 @@ import createReducer from '../../lib/createReducer';
 import * as types from './actionTypes';
 
 const initialState = {
-  testFunctionStatus: false,
-  testEndpointData: [],
+  accountList: [],
 };
 
-export const homeReducer = createReducer(initialState, {
-  [types.CHNAGE_ACTION_STATUS](state, action) {
+export const accountReducer = createReducer(initialState, {
+  [types.GET_ACCOUNT_REQUEST_SUCCESS](state, action) {
     return {
       ...state,
-      testFunctionStatus: action.info,
-    };
-  },
-  [types.TEST_REQUEST_SUCCESS](state, action) {
-    return {
-      ...state,
-      testEndpointData: action.info,
-    };
-  },
-  [types.TEST_REQUEST_FAILED](state, action) {
-    return {
-      ...state,
-      testEndpointData: action.info,
+      accountList: action.info,
     };
   },
 });

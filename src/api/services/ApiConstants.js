@@ -4,6 +4,8 @@
 
 export default {
   // BASE_URL: Config.API_URL,
-  BASE_URL: 'https://api.publicapis.org',
+  BASE_URL: 'http://10.0.2.2:5000',
   HOME: '/random',
+  CREATE_ACCOUNT: '/api/Account/create',
+  GET_ACCOUNT_LIST: '/api/Account',
 };

@@ -8,6 +8,7 @@ import {PersistGate} from 'redux-persist/es/integration/react';
 import configureStore from './store';
 import Home from './features/home/containers';
 import Navigator from './navigation';
+import Message from '../src/components/FlashMessage';
 
 const {persistor, store} = configureStore();
 
@@ -19,6 +20,7 @@ const Entrypoint = () => {
           <PaperProvider>
             {/* <Home /> */}
             <Navigator />
+            <Message />
           </PaperProvider>
         </SafeAreaProvider>
       </PersistGate>

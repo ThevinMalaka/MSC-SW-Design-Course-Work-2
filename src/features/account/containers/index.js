@@ -2,30 +2,32 @@ import React, {useEffect, useCallback, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {View, Text, StatusBar} from 'react-native';
 import {Button} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
-import {testRequest, chnageActionStatus} from '../actions';
-import {getTestFunctionStatus, getTestApiEndpointData} from '../selectors';
-import {navigateToLogin} from '../../../navigation/NavigationHelpers';
+import {getAccountRequest} from '../actions';
+import {getAccountList} from '../selectors';
+import {navigateToAddNewAccount} from '../../../navigation/NavigationHelpers';
 
 const Account = () => {
-  const status = useSelector(state => getTestFunctionStatus(state));
-  const data = useSelector(state => getTestApiEndpointData(state));
+  const accountList = useSelector(state => getAccountList(state));
 
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-  const testApi = useCallback(
+  const getAccountList = useCallback(
     info => {
-      dispatch(testRequest(info));
+      dispatch(getAccountRequest());
     },
     [dispatch],
   );
+  navigation.addListener('focus', () => {
+    getAccountList();
+  });
 
-  const testAction = useCallback(
-    info => {
-      dispatch(chnageActionStatus(info));
-    },
-    [dispatch],
-  );
+  useEffect(() => {
+    getAccountList();
+  }, []);
+
   const AccountItem = ({title, amount}) => {
     return (
       <View
@@ -54,14 +56,19 @@ const Account = () => {
         <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
           <AccountItem title="Account" amount="196,965" />
         </View>
-        <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
+        {/* <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
           <AccountItem title="Cash" amount="23,678" />
         </View>
         <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
           <AccountItem title="Petty Cash" amount="2,437" />
-        </View>
+        </View> */}
         <View style={{flexDirection: 'row', marginTop: 30}}>
-          <Button mode="contained" color="#1565c0" onPress={() => testApi()}>
+          <Button
+            mode="contained"
+            color="#1565c0"
+            onPress={() => {
+              navigateToAddNewAccount();
+            }}>
             Add new Account
           </Button>
         </View>

@@ -8,3 +8,23 @@ exports.home = async info => {
     return Promise.reject(error);
   }
 };
+
+exports.createAccount = async info => {
+  try {
+    return Promise.resolve(
+      await apiInstance.post(ApiConstants.CREATE_ACCOUNT, info),
+    );
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.getAccountList = async info => {
+  try {
+    return Promise.resolve(
+      await apiInstance.get(ApiConstants.GET_ACCOUNT_LIST),
+    );
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

@@ -1,4 +1,1 @@
-export const getTestFunctionStatus = state =>
-  state.homeReducer.testFunctionStatus;
-export const getTestApiEndpointData = state =>
-  state.homeReducer.testEndpointData || [];
+export const getAccountList = state => state.accountReducer.accountList || [];

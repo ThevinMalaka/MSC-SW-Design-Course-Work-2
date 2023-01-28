@@ -7,6 +7,9 @@
 import {takeLatest} from 'redux-saga/effects';
 
 import * as types from '../actionTypes';
-import {testFunction} from './homeSaga';
+import {createAccountFun, getAccountListFun} from './accountSaga';
 
-export const homeSaga = [takeLatest(types.TEST_REQUEST, testFunction)];
+export const accountSaga = [
+  takeLatest(types.CREATE_ACCOUNT_REQUEST, createAccountFun),
+  takeLatest(types.GET_ACCOUNT_REQUEST, getAccountListFun),
+];

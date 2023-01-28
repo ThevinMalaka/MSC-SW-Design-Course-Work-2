@@ -49,7 +49,7 @@ const AddExpenses = () => {
       <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
       <ScrollView>
         <View style={{marginTop: 20}}>
-          <View style={{alignContent:'center', alignItems:'center'}}>
+          <View style={{alignContent: 'center', alignItems: 'center'}}>
             <ButtonGroup
               accessibilityLabel="6"
               buttons={['INCOME', 'EXPENSE', 'TRANSFER']}
@@ -132,7 +132,7 @@ const AddExpenses = () => {
                   mode="contained"
                   color="#1565c0"
                   style={{width: '100%', marginRight: 10}}
-                  onPress={() => testApi()}>
+                  onPress={() => {}}>
                   Save
                 </Button>
               </View>

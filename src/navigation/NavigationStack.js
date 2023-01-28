@@ -9,6 +9,7 @@ import Login from '../features/login/containers';
 // import Home from '../features/home/containers';
 import Home from './nestingNavigator/UserDrawerNavigator';
 import AddExpenses from '../features/home/containers/addExpenses';
+import AddNewAccount from '../features/account/containers/addNewAccount';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -36,6 +37,23 @@ export default function App() {
         options={{
           headerShown: true,
           title: 'Add Transaction',
+          headerTintColor: '#fff',
+          headerStyle: {
+            backgroundColor: '#1565c0',
+            elevation: 2, // remove shadow on Android
+            shadowOpacity: 2, // remove shadow on iOS
+          },
+          headerTitleStyle: {
+            fontSize: size(16),
+          },
+        }}
+      />
+      <Stack.Screen
+        name="AddNewAccount"
+        component={AddNewAccount}
+        options={{
+          headerShown: true,
+          title: 'Add New Account',
           headerTintColor: '#fff',
           headerStyle: {
             backgroundColor: '#1565c0',
