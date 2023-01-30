@@ -9,23 +9,25 @@ import {getAccountList} from '../selectors';
 import {navigateToAddNewAccount} from '../../../navigation/NavigationHelpers';
 
 const Account = () => {
-  const accountList = useSelector(state => getAccountList(state));
+  const accountList = useSelector((state) => getAccountList(state));
+
+  console.log('accountListsssss', accountList);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const getAccountList = useCallback(
+  const getAccounts = useCallback(
     info => {
       dispatch(getAccountRequest());
     },
     [dispatch],
   );
   navigation.addListener('focus', () => {
-    getAccountList();
+    getAccounts();
   });
 
   useEffect(() => {
-    getAccountList();
+    getAccounts();
   }, []);
 
   const AccountItem = ({title, amount}) => {
@@ -56,6 +58,11 @@ const Account = () => {
         <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
           <AccountItem title="Account" amount="196,965" />
         </View>
+        {accountList && accountList.length > 0 && accountList.map((item, index) => (
+          <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
+            <AccountItem title="Account" amount="196,965" />
+          </View>
+        ))}
         {/* <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
           <AccountItem title="Cash" amount="23,678" />
         </View>

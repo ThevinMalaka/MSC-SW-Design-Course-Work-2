@@ -43,8 +43,8 @@ export function* getAccountListFun(payload) {
     if (status !== httpStatus.OK) {
       throw new Error();
     }
-    yield put(action.createAccountRequestSuccess(data?.entries));
+    yield put(action.getAccountRequestSuccess(data?.entries));
   } catch (error) {
-    yield put(action.createAccountRequestFailed());
+    yield put(action.getAccountRequestFailed());
   }
 }

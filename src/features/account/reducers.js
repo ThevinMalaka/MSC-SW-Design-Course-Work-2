@@ -7,6 +7,7 @@ const initialState = {
 
 export const accountReducer = createReducer(initialState, {
   [types.GET_ACCOUNT_REQUEST_SUCCESS](state, action) {
+    console.log('action ------>', action);
     return {
       ...state,
       accountList: action.info,
