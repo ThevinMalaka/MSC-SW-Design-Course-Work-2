@@ -28,3 +28,23 @@ exports.getAccountList = async info => {
     return Promise.reject(error);
   }
 };
+
+exports.addCategory = async info => {
+  try {
+    return Promise.resolve(
+      await apiInstance.post(ApiConstants.CREATE_CATEGORY, info),
+    );
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.getCategory = async info => {
+  try {
+    return Promise.resolve(
+      await apiInstance.get(ApiConstants.GET_CATEGORY_LIST),
+    );
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

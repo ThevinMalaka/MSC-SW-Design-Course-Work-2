@@ -8,4 +8,6 @@ export default {
   HOME: '/random',
   CREATE_ACCOUNT: '/api/Account/create',
   GET_ACCOUNT_LIST: '/api/Account',
+  CREATE_CATEGORY: '/api/Categories/create',
+  GET_CATEGORY_LIST: '/api/Categories',
 };

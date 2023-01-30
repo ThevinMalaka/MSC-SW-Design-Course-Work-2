@@ -1,31 +1,33 @@
 import React, {useEffect, useCallback, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {View, Text, StatusBar} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {Button} from 'react-native-paper';
 
-import {testRequest, chnageActionStatus} from '../actions';
-import {getTestFunctionStatus, getTestApiEndpointData} from '../selectors';
-import {navigateToLogin} from '../../../navigation/NavigationHelpers';
+import {getCategoryListRequest} from '../actions';
+import {} from '../selectors';
+import {navigateToAddNewCategory} from '../../../navigation/NavigationHelpers';
 
 const Category = () => {
-  const status = useSelector(state => getTestFunctionStatus(state));
-  const data = useSelector(state => getTestApiEndpointData(state));
+  // const status = useSelector(state => getTestFunctionStatus(state));
 
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-  const testApi = useCallback(
+  const getCategory = useCallback(
     info => {
-      dispatch(testRequest(info));
+      dispatch(getCategoryListRequest(info));
     },
     [dispatch],
   );
 
-  const testAction = useCallback(
-    info => {
-      dispatch(chnageActionStatus(info));
-    },
-    [dispatch],
-  );
+  navigation.addListener('focus', () => {
+    getCategory();
+  });
+
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   const CategoryItem = ({title}) => {
     return (
@@ -61,7 +63,10 @@ const Category = () => {
         <CategoryItem title="Others" />
 
         <View style={{flexDirection: 'row', marginTop: 30}}>
-          <Button mode="contained" color="#1565c0" onPress={() => testApi()}>
+          <Button
+            mode="contained"
+            color="#1565c0"
+            onPress={() => navigateToAddNewCategory()}>
             Add new category
           </Button>
         </View>

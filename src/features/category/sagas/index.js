@@ -7,6 +7,9 @@
 import {takeLatest} from 'redux-saga/effects';
 
 import * as types from '../actionTypes';
-import {testFunction} from './homeSaga';
+import {createCategoryFun, getCategoryListFun} from './categorySaga';
 
-export const homeSaga = [takeLatest(types.TEST_REQUEST, testFunction)];
+export const categorySaga = [
+  takeLatest(types.ADD_NEW_CATEGORY_REQUEST, createCategoryFun),
+  takeLatest(types.GET_CATEGORY_LIST_REQUEST, getCategoryListFun),
+];

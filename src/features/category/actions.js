@@ -1,29 +1,40 @@
 import * as types from './actionTypes';
 
-export function chnageActionStatus(info) {
+export function createCategoryRequest(info) {
   return {
-    type: types.CHNAGE_ACTION_STATUS,
+    type: types.ADD_NEW_CATEGORY_REQUEST,
     info,
   };
 }
 
-export function testRequest(info) {
+export function createCategoryRequestSuccess(data) {
   return {
-    type: types.TEST_REQUEST,
+    type: types.ADD_NEW_CATEGORY_SUCCESS,
+    data,
+  };
+}
+
+export function createCategoryRequestFailed() {
+  return {
+    type: types.ADD_NEW_CATEGORY_FAILURE,
+  };
+}
+
+export function getCategoryListRequest() {
+  return {
+    type: types.GET_CATEGORY_LIST_REQUEST,
+  };
+}
+
+export function getCategoryListRequestSuccess(info) {
+  return {
+    type: types.GET_CATEGORY_LIST_SUCCESS,
     info,
   };
 }
 
-export function testRequestSuccess(info) {
-  console.log('ssssss', info);
+export function getCategoryListRequestFailed() {
   return {
-    type: types.TEST_REQUEST_SUCCESS,
-    info,
-  };
-}
-
-export function testRequestfailed() {
-  return {
-    type: types.TEST_REQUEST_FAILED,
+    type: types.GET_CATEGORY_LIST_FAILURE,
   };
 }

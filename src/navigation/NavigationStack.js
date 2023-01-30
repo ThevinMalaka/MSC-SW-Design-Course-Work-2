@@ -10,6 +10,7 @@ import Login from '../features/login/containers';
 import Home from './nestingNavigator/UserDrawerNavigator';
 import AddExpenses from '../features/home/containers/addExpenses';
 import AddNewAccount from '../features/account/containers/addNewAccount';
+import AddNewCategory from '../features/category/containers/addNewCategory';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -54,6 +55,23 @@ export default function App() {
         options={{
           headerShown: true,
           title: 'Add New Account',
+          headerTintColor: '#fff',
+          headerStyle: {
+            backgroundColor: '#1565c0',
+            elevation: 2, // remove shadow on Android
+            shadowOpacity: 2, // remove shadow on iOS
+          },
+          headerTitleStyle: {
+            fontSize: size(16),
+          },
+        }}
+      />
+      <Stack.Screen
+        name="AddNewCategory"
+        component={AddNewCategory}
+        options={{
+          headerShown: true,
+          title: 'Add New Category',
           headerTintColor: '#fff',
           headerStyle: {
             backgroundColor: '#1565c0',

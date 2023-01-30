@@ -1,6 +1,6 @@
 import React, {useEffect, useCallback, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, StatusBar} from 'react-native';
+import {View, Text, StatusBar, ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 
@@ -51,39 +51,41 @@ const Account = () => {
     );
   };
   return (
-    <Fragment>
-      <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
-      <View
-        style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
-        <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
-          <AccountItem title="Account" amount="196,965" />
-        </View>
-        {accountList &&
-          accountList.length > 0 &&
-          accountList.map((item, index) => (
-            <View
-              style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
-              <AccountItem title="Account" amount="196,965" />
-            </View>
-          ))}
-        {/* <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
+    <ScrollView>
+      <Fragment>
+        <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
+        <View
+          style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
+            <AccountItem title="Account" amount="196,965" />
+          </View>
+          {accountList &&
+            accountList.length > 0 &&
+            accountList.map((item, index) => (
+              <View
+                style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
+                <AccountItem title={item?.name} amount={item?.balance} />
+              </View>
+            ))}
+          {/* <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
           <AccountItem title="Cash" amount="23,678" />
         </View>
         <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
           <AccountItem title="Petty Cash" amount="2,437" />
         </View> */}
-        <View style={{flexDirection: 'row', marginTop: 30}}>
-          <Button
-            mode="contained"
-            color="#1565c0"
-            onPress={() => {
-              navigateToAddNewAccount();
-            }}>
-            Add new Account
-          </Button>
+          <View style={{flexDirection: 'row', marginTop: 30, marginBottom: 70}}>
+            <Button
+              mode="contained"
+              color="#1565c0"
+              onPress={() => {
+                navigateToAddNewAccount();
+              }}>
+              Add new Account
+            </Button>
+          </View>
         </View>
-      </View>
-    </Fragment>
+      </Fragment>
+    </ScrollView>
   );
 };
 
