@@ -5,11 +5,12 @@ import {useNavigation} from '@react-navigation/native';
 import {Button} from 'react-native-paper';
 
 import {getCategoryListRequest} from '../actions';
-import {} from '../selectors';
+import {getCategoryList} from '../selectors';
 import {navigateToAddNewCategory} from '../../../navigation/NavigationHelpers';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Category = () => {
-  // const status = useSelector(state => getTestFunctionStatus(state));
+  const categoryies = useSelector(state => getCategoryList(state));
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -48,30 +49,27 @@ const Category = () => {
   };
 
   return (
-    <Fragment>
-      <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
-      <View
-        style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
-        <CategoryItem title="Food" />
-        <CategoryItem title="Social Life" />
-        <CategoryItem title="Fuel" />
-        <CategoryItem title="Business" />
-        <CategoryItem title="Beauty" />
-        <CategoryItem title="House" />
-        <CategoryItem title="Gift" />
-        <CategoryItem title="Insurance" />
-        <CategoryItem title="Others" />
+    <ScrollView>
+      <Fragment>
+        <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
+        <View
+          style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
+          {categoryies.length != 0 &&
+            categoryies.map((item, index) => {
+              return <CategoryItem title={item.name} key={index} />;
+            })}
 
-        <View style={{flexDirection: 'row', marginTop: 30}}>
-          <Button
-            mode="contained"
-            color="#1565c0"
-            onPress={() => navigateToAddNewCategory()}>
-            Add new category
-          </Button>
+          <View style={{flexDirection: 'row', marginTop: 30, marginBottom: 70}}>
+            <Button
+              mode="contained"
+              color="#1565c0"
+              onPress={() => navigateToAddNewCategory()}>
+              Add new category
+            </Button>
+          </View>
         </View>
-      </View>
-    </Fragment>
+      </Fragment>
+    </ScrollView>
   );
 };
 

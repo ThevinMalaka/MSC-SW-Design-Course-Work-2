@@ -21,6 +21,11 @@ const AddNewCategory = () => {
   const [name, setName] = useState('');
   const [balance, setBalance] = useState('');
   const [description, setDescription] = useState('');
+  const [expensesType, setExpensesType] = useState('INCOME');
+  const expensesSelector = {
+    INCOME: 0,
+    EXPENSE: 1,
+  };
 
   const dispatch = useDispatch();
 
@@ -32,8 +37,11 @@ const AddNewCategory = () => {
   );
 
   const submit = () => {
-    console.log(name, balance, description);
-    createCategory({name, description});
+    createCategory({
+      name,
+      description,
+      type: expensesType === 'INCOME' ? 1 : 2,
+    });
   };
 
   return (
@@ -43,6 +51,23 @@ const AddNewCategory = () => {
         <View style={{marginTop: 20}}>
           <View style={{marginTop: 20}}>
             <View style={{marginLeft: 20, marginRight: 20, marginBottom: 20}}>
+              <View style={{alignContent: 'center', alignItems: 'center'}}>
+                <ButtonGroup
+                  accessibilityLabel="6"
+                  buttons={['INCOME', 'EXPENSE']}
+                  containerStyle={{
+                    height: 40,
+                    width: Dimensions.get('window').width - 40,
+                    backgroundColor: '#b7cee8',
+                    color: '#fff',
+                  }}
+                  selectedButtonStyle={{ backgroundColor: '#1565c0', color: '#fff' }}
+                  selectedIndex={expensesSelector[expensesType]}
+                  onPress={value => {
+                    setExpensesType(Object.keys(expensesSelector)[value]);
+                  }}
+                />
+              </View>
               <View style={{marginTop: 10}}>
                 <TextInput
                   label="Category Name"
