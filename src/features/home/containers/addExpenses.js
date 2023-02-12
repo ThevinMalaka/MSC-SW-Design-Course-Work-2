@@ -16,33 +16,81 @@ import {testRequest, chnageActionStatus} from '../actions';
 import {getTestFunctionStatus, getTestApiEndpointData} from '../selectors';
 import {navigateToLogin} from '../../../navigation/NavigationHelpers';
 import {ScrollView} from 'react-native-gesture-handler';
+import {getAccountRequest} from '../../account/actions';
+import {getAccountList} from '../../account/selectors';
+import {getCategoryListRequest} from '../../category/actions';
+import {getCategoryList} from '../../category/selectors';
 
 const AddExpenses = () => {
-  const [expensesType, setExpensesType] = useState('EXPENSES');
+  const dispatch = useDispatch();
+  const [expensesType, setExpensesType] = useState('EXPENSE');
   const expensesSelector = {
     INCOME: 0,
     EXPENSE: 1,
     TRANSFER: 2,
   };
   const [date, setDate] = useState(new Date());
+  const [submitedDate, setSubmitedDate] = useState('');
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
 
   const [accountOpen, setAccountOpen] = useState(false);
   const [accountValue, setAccountValue] = useState(null);
-  const [accountItems, setAccountItems] = useState([
-    {label: 'Cash', value: 'CASH'},
-    {label: 'Account', value: 'ACCOUNT'},
-    {label: 'Card', value: 'CARD'},
-  ]);
+  const [accountItems, setAccountItems] = useState([{label: '', value: ''}]);
 
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState(null);
-  const [categoryItems, setCategoryItems] = useState([
-    {label: 'Food', value: 'FOOD'},
-    {label: 'Social Life', value: 'SOCIALLIFE'},
-    {label: 'Fuel', value: 'FUEL'},
-  ]);
+  const [categoryItems, setCategoryItems] = useState([{label: '', value: ''}]);
+
+  const accountList = useSelector(state => getAccountList(state));
+  const categoryies = useSelector(state => getCategoryList(state));
+  const getAccounts = useCallback(
+    info => {
+      dispatch(getAccountRequest());
+    },
+    [dispatch],
+  );
+
+  const getCategory = useCallback(
+    info => {
+      dispatch(getCategoryListRequest(info));
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    getAccounts();
+    getCategory();
+  }, []);
+
+  useEffect(() => {
+    if (accountList) {
+      let accountItems = [];
+      accountList.map(item => {
+        accountItems.push({label: item.name, value: item.id});
+      });
+      setAccountItems(accountItems);
+    }
+  }, [accountList]);
+
+  useEffect(() => {
+    if (categoryies) {
+      let categoryItems = [];
+      categoryies.map(item => {
+        console.log('item', item);
+        if (expensesType === 'INCOME' && item.type === 1) {
+          categoryItems.push({label: item.name, value: item.id});
+        }
+        if (expensesType === 'EXPENSE' && item.type === 2) {
+          categoryItems.push({label: item.name, value: item.id});
+        }
+      });
+      setCategoryItems(categoryItems);
+    }
+  }, [categoryies, expensesType]);
+
+  console.log('accountList', accountList);
+  console.log('categoryies', categoryies);
 
   return (
     <Fragment>
@@ -81,7 +129,26 @@ const AddExpenses = () => {
                 date={date}
                 onConfirm={date => {
                   setOpen(false);
+
+                  const today = new Date();
+                  const yyyy = date.getFullYear();
+                  let mm = date.getMonth() + 1;
+                  let dd = date.getDate();
+
+                  if (dd < 10) dd = '0' + dd;
+                  if (mm < 10) mm = '0' + mm;
+
+                  const formattedToday =
+                    yyyy + '-' + mm + '-' + dd + 'T00:00:00.000Z';
+                  // format date to dd/mm/yyyy
+
+                  // console.log('date', date);
+
+                  // console.log('date', date.toLocaleDateString());
+
                   setDate(date);
+                  setSubmitedDate(formattedToday);
+                  console.log('date', formattedToday);
                 }}
                 onCancel={() => {
                   setOpen(false);
@@ -96,6 +163,7 @@ const AddExpenses = () => {
                   setValue={setAccountValue}
                   setItems={setAccountItems}
                   placeholder="Select the Account"
+                  style={{zIndex: 1000}}
                 />
               </View>
               <View style={{marginTop: 15}}>
@@ -107,6 +175,7 @@ const AddExpenses = () => {
                   setValue={setCategoryValue}
                   setItems={setCategoryItems}
                   placeholder="Select the Category"
+                  style={{zIndex: 900}}
                 />
               </View>
               <View style={{marginTop: 10}}>

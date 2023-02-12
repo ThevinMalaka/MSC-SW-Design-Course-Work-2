@@ -1,19 +1,22 @@
-import React, {useEffect, useCallback, Fragment} from 'react';
+import React, {useEffect, useCallback, Fragment, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, StatusBar} from 'react-native';
+import {View, Text, StatusBar, useWindowDimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Button} from 'react-native-paper';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import {getCategoryListRequest} from '../actions';
 import {getCategoryList} from '../selectors';
 import {navigateToAddNewCategory} from '../../../navigation/NavigationHelpers';
-import {ScrollView} from 'react-native-gesture-handler';
 
 const Category = () => {
   const categoryies = useSelector(state => getCategoryList(state));
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const [expensesCategoryList, setExpensesCategoryList] = useState([]);
+  const [incomeCategoryList, setIncomeCategoryList] = useState([]);
 
   const getCategory = useCallback(
     info => {
@@ -30,7 +33,14 @@ const Category = () => {
     getCategory();
   }, []);
 
-  const CategoryItem = ({title}) => {
+  useEffect(() => {
+    const expensesCategory = categoryies.filter(item => item.type === 2);
+    const incomeCategory = categoryies.filter(item => item.type === 1);
+    setExpensesCategoryList(expensesCategory);
+    setIncomeCategoryList(incomeCategory);
+  }, [categoryies]);
+
+  const CategoryItem = ({title, type}) => {
     return (
       <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
         <View
@@ -38,7 +48,7 @@ const Category = () => {
             flex: 1,
             alignContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#e3e3e3',
+            backgroundColor: type == 'EXPENSES' ? '#ffc7c7' : '#bbecfc',
             padding: 10,
             margin: 3,
           }}>
@@ -54,9 +64,28 @@ const Category = () => {
         <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
         <View
           style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
-          {categoryies.length != 0 &&
-            categoryies.map((item, index) => {
-              return <CategoryItem title={item.name} key={index} />;
+          <View style={{marginBottom: 20}}>
+            <Text style={{fontWeight: 'bold', fontSize: 16}}>
+              Expenses Category List
+            </Text>
+          </View>
+          {expensesCategoryList.length != 0 &&
+            expensesCategoryList.map((item, index) => {
+              return (
+                <CategoryItem title={item.name} key={index} type={'EXPENSES'} />
+              );
+            })}
+
+          <View style={{marginBottom: 20, marginTop: 20}}>
+            <Text style={{fontWeight: 'bold', fontSize: 16}}>
+              Income Category List
+            </Text>
+          </View>
+          {incomeCategoryList.length != 0 &&
+            incomeCategoryList.map((item, index) => {
+              return (
+                <CategoryItem title={item.name} key={index} type={'INCOME'} />
+              );
             })}
 
           <View style={{flexDirection: 'row', marginTop: 30, marginBottom: 70}}>
