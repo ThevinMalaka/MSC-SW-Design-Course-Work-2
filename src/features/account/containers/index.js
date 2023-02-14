@@ -56,9 +56,6 @@ const Account = () => {
         <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
         <View
           style={{marginTop: 50, alignContent: 'center', alignItems: 'center'}}>
-          <View style={{flexDirection: 'row', marginLeft: 10, marginRight: 10}}>
-            <AccountItem title="Account" amount="196,965" />
-          </View>
           {accountList &&
             accountList.length > 0 &&
             accountList.map((item, index) => (

@@ -27,3 +27,43 @@ export function testRequestfailed() {
     type: types.TEST_REQUEST_FAILED,
   };
 }
+
+export function addTransactionRequest(info) {
+  return {
+    type: types.ADD_TRANSACTION_REQUEST,
+    info,
+  };
+}
+
+export function addTransactionRequestSuccess(info) {
+  return {
+    type: types.ADD_TRANSACTION_REQUEST_SUCCESS,
+    info,
+  };
+}
+
+export function addTransactionRequestFailed() {
+  return {
+    type: types.ADD_TRANSACTION_REQUEST_FAILED,
+  };
+}
+
+export function getTransactionRequest(info) {
+  return {
+    type: types.GET_TRANSACTION_REQUEST,
+    info,
+  };
+}
+
+export function getTransactionRequestSuccess(info) {
+  return {
+    type: types.GET_TRANSACTION_REQUEST_SUCCESS,
+    info,
+  };
+}
+
+export function getTransactionRequestFailed() {
+  return {
+    type: types.GET_TRANSACTION_REQUEST_FAILED,
+  };
+}

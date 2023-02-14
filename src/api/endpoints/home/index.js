@@ -48,3 +48,23 @@ exports.getCategory = async info => {
     return Promise.reject(error);
   }
 };
+
+exports.addTransaction = async info => {
+  try {
+    return Promise.resolve(
+      await apiInstance.post(ApiConstants.ADD_TRANSACTION, info),
+    );
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.getTransaction = async info => {
+  try {
+    return Promise.resolve(
+      await apiInstance.get(ApiConstants.GET_TRANSACTION_LIST),
+    );
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

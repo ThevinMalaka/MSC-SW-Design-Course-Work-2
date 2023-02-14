@@ -1,5 +1,6 @@
 import React, {useEffect, useCallback, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import {
   View,
   Text,
@@ -9,20 +10,50 @@ import {
 } from 'react-native';
 import {List, FAB} from 'react-native-paper';
 
-import {testRequest, chnageActionStatus} from '../actions';
-import {getTestFunctionStatus, getTestApiEndpointData} from '../selectors';
+import {getTransactionRequest, chnageActionStatus} from '../actions';
+import {
+  getTestFunctionStatus,
+  getTestApiEndpointData,
+  getTransactionList,
+} from '../selectors';
 import {navigateToAddExpenses} from '../../../navigation/NavigationHelpers';
 import {ScrollView} from 'react-native-gesture-handler';
+import {getAccountRequest} from '../../account/actions';
+import {getAccountList} from '../../account/selectors';
+import {getCategoryListRequest} from '../../category/actions';
+import {getCategoryList} from '../../category/selectors';
 
 const Home = () => {
   const status = useSelector(state => getTestFunctionStatus(state));
   const data = useSelector(state => getTestApiEndpointData(state));
+  const transactionList = useSelector(state => getTransactionList(state));
 
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-  const testApi = useCallback(
+  const accountList = useSelector(state => getAccountList(state));
+  const categoryies = useSelector(state => getCategoryList(state));
+
+  console.log('accountList', accountList);
+  console.log('accountList', categoryies);
+
+  const getAccounts = useCallback(
     info => {
-      dispatch(testRequest(info));
+      dispatch(getAccountRequest());
+    },
+    [dispatch],
+  );
+
+  const getCategory = useCallback(
+    info => {
+      dispatch(getCategoryListRequest(info));
+    },
+    [dispatch],
+  );
+
+  const getTransaction = useCallback(
+    info => {
+      dispatch(getTransactionRequest(info));
     },
     [dispatch],
   );
@@ -34,6 +65,29 @@ const Home = () => {
     [dispatch],
   );
 
+  navigation.addListener('focus', () => {
+    getTransaction();
+    getAccounts();
+    getCategory();
+  });
+
+  useEffect(() => {
+    getTransaction();
+    getAccounts();
+    getCategory();
+  }, []);
+
+  const filterPasseIdNamefromCategory = id => {
+    let result = categoryies.filter(item => item.id === id);
+    return result[0].name;
+  };
+
+  const filterPasseIdNamefromAccount = id => {
+    let result = accountList.filter(item => item.id === id);
+    return result[0].name;
+  };
+
+  console.log('transactionList', transactionList);
   let sampleObj = [
     {
       title: 'Expenses 1',
@@ -73,6 +127,8 @@ const Home = () => {
     },
   ];
 
+  console.log('aaaaaaa', filterPasseIdNamefromCategory(1));
+
   const ListComponent = data => (
     <View>
       <View
@@ -86,14 +142,18 @@ const Home = () => {
           marginRight: 15,
         }}>
         <View style={{flex: 1, justifyContent: 'center'}}>
-          <Text style={{fontSize: 12}}>{data.data.category}</Text>
+          <Text style={{fontSize: 12}}>
+            {filterPasseIdNamefromCategory(data.data.categoryid)}
+          </Text>
         </View>
         <View style={{flex: 3}}>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-            {data.data.title}
+            {data.data.note}
           </Text>
-          <Text style={{fontSize: 12}}>{data.data.account}</Text>
-          <Text style={{fontSize: 12}}>{data.data.date}</Text>
+          <Text style={{fontSize: 12}}>
+            {filterPasseIdNamefromAccount(data.data.accountid)}
+          </Text>
+          <Text style={{fontSize: 12}}>{data.data.date.split('T')[0]}</Text>
         </View>
         <View
           style={{flex: 2, justifyContent: 'center', alignItems: 'flex-end'}}>
@@ -101,9 +161,9 @@ const Home = () => {
             style={{
               fontSize: 16,
               fontWeight: 'bold',
-              color: data.data.income ? '#617859' : '#f56c6c',
+              color: data.data.type == 1 ? '#617859' : '#f56c6c',
             }}>
-            LKR {data.data.amount}
+            LKR {data.data.amout}
           </Text>
         </View>
       </View>
@@ -122,7 +182,7 @@ const Home = () => {
       <StatusBar backgroundColor="#1565c0" barStyle="light-content" />
       <ScrollView>
         <View style={{marginTop: 10}}>
-          {sampleObj.map((item, index) => (
+          {transactionList.map((item, index) => (
             <ListComponent key={index} data={item} />
           ))}
         </View>

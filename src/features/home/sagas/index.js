@@ -7,6 +7,10 @@
 import {takeLatest} from 'redux-saga/effects';
 
 import * as types from '../actionTypes';
-import {testFunction} from './homeSaga';
+import {testFunction, addExpenses, getTransacrionList} from './homeSaga';
 
-export const homeSaga = [takeLatest(types.TEST_REQUEST, testFunction)];
+export const homeSaga = [
+  takeLatest(types.TEST_REQUEST, testFunction),
+  takeLatest(types.ADD_TRANSACTION_REQUEST, addExpenses),
+  takeLatest(types.GET_TRANSACTION_REQUEST, getTransacrionList),
+];

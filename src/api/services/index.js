@@ -34,7 +34,7 @@ apiInstance.interceptors.request.use(
     const token = 'test token';
     config.headers = {
       ...config.headers,
-      Authorization: `bearer ${token}`,
+      Authorization: `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzYzMTUxNTUsImlzcyI6IlRlc3QuY29tIiwiYXVkIjoiVGVzdC5jb20ifQ.tDUti-OuKo-Qaftbe1PLpoEmHohiq2kVctHOXZw7NVc`,
       refreshToken: refreshToken,
     };
     if (!config.headers.Authorization) {

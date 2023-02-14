@@ -10,4 +10,6 @@ export default {
   GET_ACCOUNT_LIST: '/api/Account',
   CREATE_CATEGORY: '/api/Categories/create',
   GET_CATEGORY_LIST: '/api/Categories',
+  ADD_TRANSACTION: '/api/Transactions/create',
+  GET_TRANSACTION_LIST: '/api/Transactions',
 };

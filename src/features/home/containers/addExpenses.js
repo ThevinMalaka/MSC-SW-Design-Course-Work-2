@@ -12,7 +12,7 @@ import {ButtonGroup} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import {testRequest, chnageActionStatus} from '../actions';
+import {addTransactionRequest} from '../actions';
 import {getTestFunctionStatus, getTestApiEndpointData} from '../selectors';
 import {navigateToLogin} from '../../../navigation/NavigationHelpers';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -33,6 +33,8 @@ const AddExpenses = () => {
   const [submitedDate, setSubmitedDate] = useState('');
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
+  const [amount, setAmount] = useState('');
+  const [note, setNote] = useState('');
 
   const [accountOpen, setAccountOpen] = useState(false);
   const [accountValue, setAccountValue] = useState(null);
@@ -54,6 +56,13 @@ const AddExpenses = () => {
   const getCategory = useCallback(
     info => {
       dispatch(getCategoryListRequest(info));
+    },
+    [dispatch],
+  );
+
+  const addTransaction = useCallback(
+    info => {
+      dispatch(addTransactionRequest(info));
     },
     [dispatch],
   );
@@ -182,16 +191,16 @@ const AddExpenses = () => {
                 <TextInput
                   label="Amount"
                   mode="outlined"
-                  value={Number}
-                  onChangeText={text => setText(text)}
+                  value={amount}
+                  onChangeText={text => setAmount(text)}
                 />
               </View>
               <View style={{marginTop: 10}}>
                 <TextInput
                   label="Note"
                   mode="outlined"
-                  value={Number}
-                  onChangeText={text => setText(text)}
+                  value={note}
+                  onChangeText={text => setNote(text)}
                   multiline={true}
                   numberOfLines={5}
                 />
@@ -201,7 +210,27 @@ const AddExpenses = () => {
                   mode="contained"
                   color="#1565c0"
                   style={{width: '100%', marginRight: 10}}
-                  onPress={() => {}}>
+                  onPress={() => {
+                    console.log('aaaaa', {
+                      amout: amount,
+                      note: note,
+                      date: submitedDate,
+                      type: expensesType,
+                      categoryId: categoryValue,
+                      accountId: accountValue,
+                      transferAccountId: null,
+                    });
+                    addTransaction({
+                      amout: Number(amount),
+                      note: note,
+                      date: submitedDate,
+                      type: expensesType === 'INCOME' ? 1 : 2,
+                      categoryId: categoryValue,
+                      accountId: accountValue,
+                      transferAccountId: null,
+                      userid: 1,
+                    });
+                  }}>
                   Save
                 </Button>
               </View>
